@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LexiLite — Dictionary</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://api.dictionaryapi.dev">
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <h1 class="brand">
+        <span class="brand__logo" aria-hidden="true">📚</span>
+        LexiLite
+      </h1>
+
+      <div class="header__actions">
+        <button id="themeToggle" class="btn btn--outline" aria-label="Toggle theme">
+          <svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M12 3a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm7 9a1 1 0 0 1 1 1h2a1 1 0 1 1 0 2h-2a1 1 0 1 1-2 0 1 1 0 0 1 1-1ZM4 13a1 1 0 0 1-1-1H1a1 1 0 1 1 0-2h2a1 1 0 1 1 2 0 1 1 0 0 1-1 1Zm1.64-7.36a1 1 0 0 1 1.41 0l1.41 1.41a1 1 0 1 1-1.41 1.42L5.64 7.05a1 1 0 0 1 0-1.41Zm11.31 0a1 1 0 0 1 0 1.41l-1.41 1.42a1 1 0 1 1-1.41-1.42l1.41-1.41a1 1 0 0 1 1.41 0ZM6.05 17.95a1 1 0 0 1 0-1.41l1.41-1.42a1 1 0 1 1 1.41 1.42L7.46 17.95a1 1 0 0 1-1.41 0Zm9.49 0-1.41-1.41a1 1 0 0 1 1.41-1.42l1.41 1.42a1 1 0 0 1-1.41 1.41ZM12 18a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app__main">
+      <section class="search">
+        <form id="searchForm" class="search__form" autocomplete="off">
+          <input
+            id="query"
+            class="search__input"
+            type="text"
+            inputmode="search"
+            placeholder="Search an English word… (e.g., serendipity)"
+            aria-label="Search word"
+            required
+          />
+          <div class="search__buttons">
+            <button type="submit" class="btn btn--outline" id="searchBtn">Search</button>
+            <button type="button" class="btn btn--outline" id="randomBtn" title="Random word">Random</button>
+            <button type="button" class="btn btn--outline" id="clearBtn" title="Clear results">Clear</button>
+          </div>
+        </form>
+        <p class="hint">Tip: Tap a synonym chip to look it up instantly.</p>
+      </section>
+
+      <section id="results" class="results" aria-live="polite"></section>
+
+      <aside class="history">
+        <div class="history__head">
+          <h2 class="history__title">Recent searches</h2>
+          <button id="clearHistory" class="btn btn--ghost">Clear history</button>
+        </div>
+        <div id="historyList" class="history__list"></div>
+      </aside>
+    </main>
+
+    <footer class="app__footer">
+      <small>
+        Powered by <a href="https://dictionaryapi.dev/" target="_blank" rel="noopener">dictionaryapi.dev</a>
+      </small>
+    </footer>
+  </div>
+
+  <template id="cardTemplate">
+    <article class="card">
+      <div class="card__top">
+        <div class="wordblock">
+          <h2 class="word"></h2>
+          <div class="phonetic"></div>
+        </div>
+        <div class="audio">
+          <button class="btn btn--outline btn--circle playBtn" title="Play pronunciation" aria-label="Play pronunciation">
+            ▶
+          </button>
+        </div>
+      </div>
+      <div class="pos"></div>
+      <ul class="defs"></ul>
+      <div class="syns"></div>
+      <div class="source"></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LexiLite — Dictionary</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://api.dictionaryapi.dev">
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <h1 class="brand">
+        <span class="brand__logo" aria-hidden="true">📚</span>
+        LexiLite
+      </h1>
+
+      <div class="header__actions">
+        <button id="themeToggle" class="btn btn--outline" aria-label="Toggle theme">
+          <svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M12 3a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm7 9a1 1 0 0 1 1 1h2a1 1 0 1 1 0 2h-2a1 1 0 1 1-2 0 1 1 0 0 1 1-1ZM4 13a1 1 0 0 1-1-1H1a1 1 0 1 1 0-2h2a1 1 0 1 1 2 0 1 1 0 0 1-1 1Zm1.64-7.36a1 1 0 0 1 1.41 0l1.41 1.41a1 1 0 1 1-1.41 1.42L5.64 7.05a1 1 0 0 1 0-1.41Zm11.31 0a1 1 0 0 1 0 1.41l-1.41 1.42a1 1 0 1 1-1.41-1.42l1.41-1.41a1 1 0 0 1 1.41 0ZM6.05 17.95a1 1 0 0 1 0-1.41l1.41-1.42a1 1 0 1 1 1.41 1.42L7.46 17.95a1 1 0 0 1-1.41 0Zm9.49 0-1.41-1.41a1 1 0 0 1 1.41-1.42l1.41 1.42a1 1 0 0 1-1.41 1.41ZM12 18a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app__main">
+      <section class="search">
+        <form id="searchForm" class="search__form" autocomplete="off">
+          <input
+            id="query"
+            class="search__input"
+            type="text"
+            inputmode="search"
+            placeholder="Search an English word… (e.g., serendipity)"
+            aria-label="Search word"
+            required
+          />
+          <div class="search__buttons">
+            <button type="submit" class="btn btn--outline" id="searchBtn">Search</button>
+            <button type="button" class="btn btn--outline" id="randomBtn" title="Random word">Random</button>
+            <button type="button" class="btn btn--outline" id="clearBtn" title="Clear results">Clear</button>
+          </div>
+        </form>
+        <p class="hint">Tip: Tap a synonym chip to look it up instantly.</p>
+      </section>
+
+      <section id="results" class="results" aria-live="polite"></section>
+
+      <aside class="history">
+        <div class="history__head">
+          <h2 class="history__title">Recent searches</h2>
+          <button id="clearHistory" class="btn btn--ghost">Clear history</button>
+        </div>
+        <div id="historyList" class="history__list"></div>
+      </aside>
+    </main>
+
+    <footer class="app__footer">
+      <small>
+        Powered by <a href="https://dictionaryapi.dev/" target="_blank" rel="noopener">dictionaryapi.dev</a>
+      </small>
+    </footer>
+  </div>
+
+  <template id="cardTemplate">
+    <article class="card">
+      <div class="card__top">
+        <div class="wordblock">
+          <h2 class="word"></h2>
+          <div class="phonetic"></div>
+        </div>
+        <div class="audio">
+          <button class="btn btn--outline btn--circle playBtn" title="Play pronunciation" aria-label="Play pronunciation">
+            ▶
+          </button>
+        </div>
+      </div>
+      <div class="pos"></div>
+      <ul class="defs"></ul>
+      <div class="syns"></div>
+      <div class="source"></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
